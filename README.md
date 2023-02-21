@@ -1,2 +1,2 @@
-# haskell-template
-Template repo to dev with Haskell
+# Haskell train
+http://learnyouahaskell.com/chapters を読んでいく
