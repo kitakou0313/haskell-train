@@ -25,3 +25,38 @@ bmiTell' weight height
 calcBMIs :: (RealFloat a) => [(a, a)] -> [a]
 calcBMIs xs = [bmi w h | (w, h) <- xs]
  where bmi weight height = weight / (height ^ 2)
+
+-- let in構文で同じようなことができる
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h = 
+      let sideArea = 2 * pi * r * h
+          topArea = pi * r ^ 2
+      in sideArea + 2 * topArea
+
+-- 違うのはlet in はifなどと同様にexpressionであること
+-- expressionなら値を返すので下記のようなことができる
+-- [let square x = x^2 in (square 5 , square 3)]
+-- (let a = 100; b = 200; c = 300 in a*b*c, let foo="Hey "; bar = "there!" in foo ++ bar)
+-- (let (a,b,c) = (1,2,3) in a+b+c)
+
+calcBMIs' :: (RealFloat a) => [(a,a)] -> [a]
+calcBMIs' xs = [bmi |(w,h) <- xs, let bmi = w / (h^2)]
+
+calcBMIs'' :: (RealFloat a) => [(a,a)] -> [a]
+calcBMIs'' xs = [bmi | (w,h) <- xs, let bmi = w / (h^2), bmi >= 20]
+
+-- case文
+-- 引数の値によるpattern matchingみたいなことができる
+head' :: [a] -> a  
+head' [] = error "No head for empty lists!"  
+head' (x:_) = x  
+
+head'' :: [a] -> a
+head'' x = case x of [] -> error "No head for empty lists!"
+                     (x:_) -> x
+
+-- pattern matchingと異なり関数の中でも使える
+describeList :: [a] -> String
+describeList xs = "The list is " ++ case xs of [] -> "empty!"
+                                               [x] -> "a singleton list."
+                                               xs -> " a longer list."
