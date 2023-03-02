@@ -44,3 +44,29 @@ flip'' f = g
 
 flip' :: (a -> b -> c) -> b -> a -> c
 flip' f x y = f y x
+
+-- higher order functionの例
+
+-- map関数
+-- 配列の各要素に関数を適用したものの配列を返す
+-- JSとかで見るやつと同じ
+map' :: (a -> b) -> [a] -> [b]
+map' _ [] = []
+map' f (x:xs) = f x : map f xs
+
+-- filter関数
+-- 配列の各要素に対してbool値を返す関数（predicate、述語）を用いて、配列の要素をフィルタリング
+-- JSとかで見るやつと同じ
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' f (x:xs)
+    | f x = x:rest
+    | otherwise = rest
+    where rest = filter' f xs
+
+quicksort' :: (Ord a) => [a] -> [a]
+quicksort' [] = []
+quicksort' (x:xs) =
+    let smallerSorted = quicksort' (filter (<=x) xs)
+        biggerSorted = quicksort' (filter' (>x) xs)
+    in smallerSorted ++ [x] ++ biggerSorted
