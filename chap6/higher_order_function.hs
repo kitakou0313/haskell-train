@@ -113,3 +113,38 @@ mappedLambda = map (\(a,b) -> a + b) [(1,2), (3,4), (5,6),(7,8)]
 -- 関数そのものを返すことを表したいとき
 flip''' :: (a -> b -> c) -> b -> a -> c
 flip''' f = \a b -> f b a
+
+-- fold関数...リストに対する再帰処理の実装を簡単にしてくれる
+-- 二項関数(binary function),初期値,再帰的に適用するlistの三つを引数に取る
+-- 前の要素までの結果を格納したacc、今の要素が入るxを二項関数に適用し、次のaccとする
+-- foldlは左から
+sum' :: (Num a) => [a] -> a
+-- sum' xs = foldl (\acc x -> acc + x) 0 xs
+sum' = foldl (+) 0
+
+-- foldrは右から
+-- 二項関数の引数の順番も逆になる
+map''::(a -> b) -> [a] -> [b]
+map'' f xs = foldr (\x acc -> (f x): acc) [] xs
+
+-- foldrのみ無限長リストを扱える（終端が決まってから実行できるので）
+-- fold関数はリストを要素ごと横断する任意の関数の実装に使える
+-- foldl1, foldr1などは配列の先頭、終端の値を初期値としてfoldを行う
+-- empty listを入力されるとruntime errorなので注意
+
+maximum' ::(Ord a) => [a] -> a
+maximum' = foldl1 (\acc x -> if x > acc then x else acc)
+
+reverse'::[a] -> [a]
+reverse' = foldl (\acc x -> x:acc) []
+
+filter'' :: (a -> Bool) -> [a] -> [a]
+filter'' f = foldr (\x acc -> if f x then x:acc else acc) []
+
+-- scan...foldのaccの中間状態をリストにして出力
+sumOfListWithScanl = scanl (+) 0 [1,2,3]
+sumOfListWithScanl1 = scanl1 (+) [1,2,3]
+
+
+sqrtSums :: Int
+sqrtSums = length (takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))) + 1
