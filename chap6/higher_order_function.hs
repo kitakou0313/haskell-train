@@ -96,3 +96,20 @@ numLongChains = length(filter isLongChain [chain n | n <- [1..100]])
 
 -- 引数を複数とる関数をmapに渡すことでcurried functionのlistを作れる
 listOfFunx = map (*) [0..]
+
+-- lambda...無名関数
+numLongChains' :: Int
+numLongChains' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
+
+zipWithLambda = zipWith (\a b -> a + b) [1,2,3] [4,5,6]
+
+-- 通常の関数と同じくpattern matchingも使える
+-- 引数のパターンによる分岐はできないので注意
+-- []と(x:xs)など
+mappedLambda = map (\(a,b) -> a + b) [(1,2), (3,4), (5,6),(7,8)]
+
+-- lambdaの使いどころ
+-- 一度しか使用しない関数を定義するとき
+-- 関数そのものを返すことを表したいとき
+flip''' :: (a -> b -> c) -> b -> a -> c
+flip''' f = \a b -> f b a
