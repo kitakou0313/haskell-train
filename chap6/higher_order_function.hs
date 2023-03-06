@@ -148,3 +148,29 @@ sumOfListWithScanl1 = scanl1 (+) [1,2,3]
 
 sqrtSums :: Int
 sqrtSums = length (takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))) + 1
+
+-- $での関数適用
+-- +などと同じ演算子の一種、($) :: (a -> b) -> a -> b として関数としても見れる
+-- スペースによる関数適用は左結合（left-associative） f a b c = ((f a) b) c
+-- $を用いると右結合になる=右側が優先される
+
+-- 以下二つは同じ
+rootOfSum = sqrt (3 + 4 + 9)
+rootOfSum' = sqrt $ 3 + 4 + 9
+
+filterWithDollar = sum (filter (> 10) (map (*2) [2..10]))
+filterWithDollar' :: Integer
+filterWithDollar' = sum $ filter (> 10) $ map (*2) [2..10]
+
+-- 関数合成 functional decomposition
+-- 二つの関数を合成して一つの関数とする
+-- f (g x) = (f ○ g) x
+
+-- (.) :: (b -> c) -> (a -> b) -> a -> c
+-- f . g = \x -> f $ g x
+
+-- lambda関数と似たようなことができるが、こっちのほうが可読性が高い
+negatedNumbers = map (negate . abs) [1,2,3,4]
+
+-- 右結合
+negatedSumOfNumbers = map (negate.abs.sum) [[1..5], [10..20],[30..40]]
