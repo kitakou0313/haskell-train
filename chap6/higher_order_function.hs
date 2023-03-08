@@ -174,3 +174,8 @@ negatedNumbers = map (negate . abs) [1,2,3,4]
 
 -- 右結合
 negatedSumOfNumbers = map (negate.abs.sum) [[1..5], [10..20],[30..40]]
+
+-- 複数引数を取る関数の合成
+sumReplicateMax = sum (replicate 5 (max 6.7 8.9))
+sumReplicateMax' = (sum . replicate 5 . max 6.7) 8.9
+sumReplicateMax'' = sum . replicate 5 . max  6.7 $ 8.9
