@@ -153,6 +153,7 @@ sqrtSums = length (takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))) + 1
 -- +などと同じ演算子の一種、($) :: (a -> b) -> a -> b として関数としても見れる
 -- スペースによる関数適用は左結合（left-associative） f a b c = ((f a) b) c
 -- $を用いると右結合になる=右側が優先される
+-- 優先度が最も低くなる
 
 -- 以下二つは同じ
 rootOfSum = sqrt (3 + 4 + 9)
@@ -183,3 +184,25 @@ sumReplicateMax'' = sum . replicate 5 . max  6.7 $ 8.9
 -- 複数の括弧で構成された関数を関数合成で書き直せる
 functionCompSample = replicate 100 (product (map (*3) (zipWith max [1,2,3,4,5] [4,5,6,7,8])))
 functionCompSample' = replicate 100 . product . map (*3) . zipWith max [1,2,3,4,5] $ [4,5,6,7,8]
+
+
+-- function compositionは関数のpointless styleでの定義にでも使用可能
+sum'' ::(Num a) => [a] -> a
+sum'' xs = foldl (+) 0 xs
+-- carry化により以下のように書ける
+sum''' ::(Num a) => [a] -> a
+sum''' = foldl (+) 0
+
+-- 括弧に含まれているため引数を除けない場合も、function compositionを用いて定義することで引数を除ける
+fn  = ceiling . negate . tan . cos . max 50
+fn' x = ceiling (negate (tan (cos (max 50 x))))
+
+-- 関数合成をしすぎると可読性が悪化するため、適切に中間結果を変数にletなどを用いて束縛するべき
+oddSquareSum :: Integer
+oddSquareSum = sum . takeWhile (<10000) . filter odd . map (^2) $ [1..]
+
+oddSquareSum' :: Integer
+oddSquareSum' = 
+    let oddSquares = filter odd $ map (^2) [1..]
+        belowLimit = takeWhile (<10000) oddSquares
+    in sum belowLimit
