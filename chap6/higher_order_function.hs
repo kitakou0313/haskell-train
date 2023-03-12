@@ -31,7 +31,12 @@ compareWithHundred' = compare 100
 -- 関数を引数にとる関数の定義
 -- 関数を引数として取るので、関数の型定義時には明示的に括弧をつけて型を定義している
 applyTwice :: (a -> a) -> a -> a
+-- 関数は左からスペースによって適用されるので()が必要 f f x = (f f) xになる
 applyTwice f x = f (f x)
+
+applyTwice' :: (t1 -> t2) -> t2
+applyTwice' f = f f
+
 
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
 zipWith' _ [] _ = []
