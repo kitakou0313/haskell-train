@@ -34,8 +34,8 @@ applyTwice :: (a -> a) -> a -> a
 -- 関数は左からスペースによって適用されるので()が必要 f f x = (f f) xになる
 applyTwice f x = f (f x)
 
-applyTwice' :: (t1 -> t2) -> t2
-applyTwice' f = f f
+-- applyTwice' :: (a -> a) -> a
+-- applyTwice' f = f f
 
 
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -184,8 +184,10 @@ negatedNumbers = map (negate . abs) [1,2,3,4]
 negatedSumOfNumbers = map (negate.abs.sum) [[1..5], [10..20],[30..40]]
 
 -- 複数引数を取る関数の合成
+-- 一つの引数を取るように部分的に適用しなければならない
 sumReplicateMax = sum (replicate 5 (max 6.7 8.9))
 sumReplicateMax' = (sum . replicate 5 . max 6.7) 8.9
+-- 下では「max 6.7の引数を引数とし、結果をreplicate 5に渡して返り値をsumの引数とする」関数が定義され、8.9を引数として実行されている
 sumReplicateMax'' = sum . replicate 5 . max  6.7 $ 8.9
 
 -- 複数の括弧で構成された関数を関数合成で書き直せる
