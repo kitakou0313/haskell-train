@@ -29,3 +29,13 @@ surfaceRectangle = surface $ Rectangle 0 0 100 100
 
 -- Value constructorsは関数なので、カリー化もmapでの適用もできる
 concentricCircles = map (Circle 10 20) [4,5,6,7]
+
+-- 中間のデータ型を定義して可読性を上げる
+-- 型に含まれるValue Constructorが一つだけの場合は型名と同じにするのが一般的
+data Point = Point Float Float deriving (Show)
+data Shape2 = Circle2 Point Float | Rectangle2 Point Point deriving (Show)
+
+-- Value Constructorによるpattern matchはnestして使える
+surface2 :: Shape2 -> Float
+surface2 (Circle2 _ r) = pi * r ^ 2
+surface2 (Rectangle2 (Point x1 y1) (Point x2 y2)) = (abs $ x1 - x2) * (abs $ y1 - y2)
