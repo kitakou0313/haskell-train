@@ -1,4 +1,3 @@
-import System.Posix (FlowAction)
 -- 独自の型の定義
 -- dataを使用する
 data OwnBool = True | False
