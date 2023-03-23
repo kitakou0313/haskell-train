@@ -1,10 +1,11 @@
 modele Shapes
-(
-    Point,
-    Shape2(..),
-    surface2,
-    nudge
-) where
+(Point(Point)
+    ,Shape2(Circle2, Rectangle2)
+    ,surface2
+    ,nudge
+    ) where
+-- 型（Value constructor）とすることでエクスポートできる
+-- Value Constructorをエクスポートしないとpattern matchできなくなる点は注意
 
 data Point = Point Float Float deriving (Show)
 data Shape2 = Circle2 Point Float | Rectangle2 Point Point deriving (Show)
