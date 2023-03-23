@@ -1,9 +1,10 @@
-modele Shapes
-(Point(Point)
-    ,Shape2(Circle2, Rectangle2)
-    ,surface2
-    ,nudge
-    ) where
+module Shapes
+(
+    Point(..),
+    Shape2(..),
+    surface2,
+    nudge
+) where
 -- 型（Value constructor）とすることでエクスポートできる
 -- Value Constructorをエクスポートしないとpattern matchできなくなる点は注意
 
