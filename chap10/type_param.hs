@@ -25,3 +25,24 @@ data Car2 a b c = Car2 {
 -- 下の例ではcの方はShow型，a,bはStringの型である必要がある
 tellCar2 :: Show a => Car2 [Char] [Char] a -> [Char]
 tellCar2 (Car2 {company2=c, model2=m, year2=y}) = "This " ++ c ++ " " ++ m ++ " was made in " ++ show y
+
+-- ある振る舞いをするのに型が影響しないときなどに使用する
+-- ex. list...格納する値はなんでもよい
+
+-- Map型にも使われている
+-- Map k, v ... kはOrdの制約あり
+
+-- 注意:type classによる制約をdata declarationsに加えるべきではない
+-- その型に関連する全ての関数の定義にtype class制約を書く必要がでるため
+
+-- 制約を仮定したい関数の定義で書くのが良さそう
+-- 制約に関する知識が型の定義に集約されないのは不便そう
+
+-- Vectorの定義の例
+
+data Vector a = Vector a a a deriving (Show)
+vplus :: (Num t) => Vector t -> Vector t -> Vector t
+vplus (Vector i j k) (Vector x y z) = Vector (i+x) (j+y) (k+x)
+
+-- Value ConstructorとType Constructorの違い
+-- data構文の左辺がType constructor, 右辺がValue Constructor
