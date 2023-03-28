@@ -46,3 +46,14 @@ vplus (Vector i j k) (Vector x y z) = Vector (i+x) (j+y) (k+x)
 
 -- Value ConstructorとType Constructorの違い
 -- data構文の左辺がType constructor, 右辺がValue Constructor
+
+-- Type class...OOPのinterfaceみたいなもの
+-- 含まれる型はType instanceとよぶ
+-- 関数型プログラミングではdataの定義->後でどのType classに入れるか決める
+
+-- Eq, Ord, Enum, Bounded, Show, Readはderiving構文で自動的にtype classのinstaceとできる
+data Person3 = Person3 {
+    firstName3 :: String,
+    lastName :: String,
+    age3 :: Int
+} deriving (Eq, Show, Read)
