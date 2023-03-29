@@ -57,3 +57,12 @@ data Person3 = Person3 {
     lastName :: String,
     age3 :: Int
 } deriving (Eq, Show, Read)
+
+-- Ord type classについて
+-- 異なるValue Constrctorで得られた値を比較する場合，最初に定義された方が小さい扱いになる
+data Bool3 = False3 | True3 deriving (Eq, Ord)
+-- False3 < True3はTrueになる
+
+-- Ordをderiveする場合はEq Typeclassをderiveする必要があるっぽい
+-- deriveing (Eq, Ord)にしないとエラーになる
+data Day = Monday | Tuesday | WednesDay | Friday | Saturaday | Sunday deriving (Eq, Ord, Show, Read, Bounded, Enum)
