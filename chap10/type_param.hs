@@ -65,4 +65,22 @@ data Bool3 = False3 | True3 deriving (Eq, Ord)
 
 -- Ordをderiveする場合はEq Typeclassをderiveする必要があるっぽい
 -- deriveing (Eq, Ord)にしないとエラーになる
+-- Mondayなどはnullaly（フィールドをもたない）なValue constructor
 data Day = Monday | Tuesday | WednesDay | Friday | Saturaday | Sunday deriving (Eq, Ord, Show, Read, Bounded, Enum)
+
+-- type synonimus
+-- type構文で型に別名をつけられる
+type String2 = [Char]
+
+-- 可読性の向上に使用できる
+phoneBook :: [(String, String)]
+phoneBook = 
+    [("betty", "555-2938"),
+    ("bonnie", "452-2928")]
+
+type PhoneNumber = String
+type Name = String
+type PhoneBook = [(Name, PhoneNumber)]
+phoneBook2 :: PhoneBook
+phoneBook2 = [
+    ("betty","555-2938")]
