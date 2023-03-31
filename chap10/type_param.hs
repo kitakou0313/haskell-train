@@ -1,3 +1,4 @@
+import Data.Map
 -- Type ConstructorとType parameters
 
 -- Value constructorと同様にType constructorも存在する
@@ -84,3 +85,9 @@ type PhoneBook = [(Name, PhoneNumber)]
 phoneBook2 :: PhoneBook
 phoneBook2 = [
     ("betty","555-2938")]
+
+-- type paramの使用も可能
+type AssocList k v = [(k,v)]
+-- 関数と同じくparticial applyも可能
+type IntMap v = Map Int v
+type IntMap2 = Map Int
