@@ -91,3 +91,12 @@ type AssocList k v = [(k,v)]
 -- 関数と同じくparticial applyも可能
 type IntMap v = Map Int v
 type IntMap2 = Map Int
+
+-- 便利な型としてEither型がある
+data Either a b = Left a | Right b deriving (Eq, Ord, Read, Show)
+-- Left aのValue constructorならLeft a，Right bならRight bだが，
+-- 両方ともEither a b型として扱える
+-- :t Right 'a'
+-- Either a Char
+-- :t Left True
+-- Either Bool b
