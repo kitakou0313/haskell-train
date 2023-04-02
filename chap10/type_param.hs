@@ -115,3 +115,17 @@ lockerLookUp lockerNumber map =
         Just (state, code) -> if state /= Taken
                                 then Right2 code
                                 else Left2 $ "Locker " ++ show lockerNumber ++ " is already taken!"
+
+lockers :: LockerMap
+lockers = Map.fromList 
+    [(100, (Taken, "AD39I"))
+    ,(101, (Free, "JAHH3I"))
+    ]
+-- 3通りの出力が見れる
+
+-- ghci> lockerLookUp 101 lockers 
+-- Right2 "JAHH3I"
+-- ghci> lockerLookUp 100 lockers 
+-- Left2 "Locker 100 is already taken!"
+-- ghci> lockerLookUp 103 lockers 
+-- Left2 "Locker number 103 doesn't exist!"
