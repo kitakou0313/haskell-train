@@ -1,4 +1,5 @@
-import Data.Map
+import qualified Data.Map as Map
+
 -- Type ConstructorとType parameters
 
 -- Value constructorと同様にType constructorも存在する
@@ -6,7 +7,7 @@ import Data.Map
 
 -- 以下ではMaybeはType constructor、
 -- aがType parameterと呼ぶ
-data Maybe a = Nothing | Just a
+data Maybe a = Nothing2 | Just2 a
 -- 型がNothingではないなら、何らかの型を持つ
 -- Maybe Int, Maybe floatなど
 -- Maybe自体の型を持つ値はない（Type constructorなので）
@@ -89,14 +90,28 @@ phoneBook2 = [
 -- type paramの使用も可能
 type AssocList k v = [(k,v)]
 -- 関数と同じくparticial applyも可能
-type IntMap v = Map Int v
-type IntMap2 = Map Int
+type IntMap v = Map.Map Int v
+type IntMap2 = Map.Map Int
 
 -- 便利な型としてEither型がある
-data Either a b = Left a | Right b deriving (Eq, Ord, Read, Show)
+data Either2 a b = Left2 a | Right2 b deriving (Eq, Ord, Read, Show)
 -- Left aのValue constructorならLeft a，Right bならRight bだが，
 -- 両方ともEither a b型として扱える
 -- :t Right 'a'
 -- Either a Char
 -- :t Left True
 -- Either Bool b
+
+-- 複数の理由でエラーを返すことがある関数に用いると便利
+-- Leftをエラー用，Rightが正しい値用
+data LockerState = Taken | Free deriving (Show, Eq)
+type Code = String
+type LockerMap = Map.Map Int (LockerState, Code)
+
+lockerLookUp :: Int -> LockerMap -> Either2 String Code
+lockerLookUp lockerNumber map = 
+    case Map.lookup lockerNumber map of
+        Nothing -> Left2 $ "Locker number " ++ show lockerNumber ++ " doesn't exist!"
+        Just (state, code) -> if state /= Taken
+                                then Right2 code
+                                else Left2 $ "Locker " ++ show lockerNumber ++ " is already taken!"
