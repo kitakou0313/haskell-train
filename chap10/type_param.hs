@@ -15,6 +15,12 @@ data Maybe a = Nothing2 | Just2 a
 -- 上の定義ではNothigもMaybe aに含まれるため，Maybe Int型としてNothingを渡せる
 -- aが定まった時にMaybe Int = Nothing | Just Intになるため，定義的には確かにそう 
 
+-- 型定義で具体的な型を指定
+-- pattern matchでその型を持つ変数として受け取る
+data TestType a = TestType a
+testFunc ::  TestType String -> String
+testFunc (TestType var) = var 
+
 -- Carをtype paramを使って定義
 data Car2 a b c = Car2 {
     company2 :: a,
