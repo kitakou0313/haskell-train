@@ -21,6 +21,15 @@ data TestType a = TestType a
 testFunc ::  TestType String -> String
 testFunc (TestType var) = var 
 
+-- 型paramを持つかつ複数のValue Constructorを持つ場合
+-- pattern match系はValue constructorを元に行うので関数の型定義で型paramを指定，Value constructorはそれに従ってpattern matchをやるイメージ
+data Maybe5 a = Nothing5 | Just5 a
+testFunc2 :: Maybe5 String -> String
+testFunc2 a = 
+    case a of Nothing5 -> "Error!"
+              (Just5 a) -> a
+
+
 -- Carをtype paramを使って定義
 data Car2 a b c = Car2 {
     company2 :: a,
